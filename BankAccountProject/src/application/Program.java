@@ -3,7 +3,7 @@ package application;
 import java.util.Locale;
 import java.util.Scanner;
 
-import entities.BankAccount;
+import entities.Account;
 
 
 public class Program {
@@ -11,38 +11,40 @@ public class Program {
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
-		
+		Account account;
 		
 		
 		System.out.println("Enter account number: ");
 		int number = sc.nextInt();
 		sc.nextLine();
 		System.out.println("Enter account holder: ");
-		String name = sc.nextLine();
+		String holder = sc.nextLine();
 		System.out.println("Is there na initial deposit (y/n)? ");
-		String simOuNao = sc.nextLine();
-		double balance = 0;
-		if (simOuNao.equalsIgnoreCase("y")) {
+		char response = sc.next().charAt(0);
+		
+		if (response == 'y') {
 			System.out.println("Enter initial deposit value: ");
-			balance = sc.nextDouble();
+			double InitialDeposit = sc.nextDouble();
+			account = new Account(holder, number, InitialDeposit);
 		}
+		else {
+			account = new Account(holder, number);
+		}
+		System.out.println();
 		
-		BankAccount bankAccount = new BankAccount(name, number, balance);
-		System.out.println("");
-		
-		System.out.println(bankAccount);
-		System.out.println("");
+		System.out.println(account);
+		System.out.println();
 		
 		System.out.println("Enter a deposit value: ");
-		double value = sc.nextDouble();
-		bankAccount.deposit(value);
-		System.out.println("Updated " + bankAccount);
-		System.out.println("");
+		double depositValue = sc.nextDouble();
+		account.deposit(depositValue);
+		System.out.println("Updated " + account);
+		System.out.println();
 		
 		System.out.println("Enter a withdraw value: ");
-		value = sc.nextDouble();
-		bankAccount.withdraw(value);
-		System.out.println("Updated " +  bankAccount);
+		double withdrawValue = sc.nextDouble();
+		account.withdraw(withdrawValue);
+		System.out.println("Updated " +  account);
 		
 		sc.close();
 	}
